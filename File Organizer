@@ -1,0 +1,41 @@
+import os
+import shutil
+
+folder_path = "/storage/emulated/0/Download"
+
+file_types = {
+    ".jpg": "Images",
+    ".jpeg": "Images",
+    ".png": "Images",
+    ".pdf": "PDFs",
+    ".docx": "Documents",
+    ".xlsx": "Documents",
+    ".pptx": "Documents",
+    ".mp3": "Music",
+    ".mp4": "Videos",
+    ".py": "Python",
+    ".mht": "Web Pages"
+}
+
+files = os.listdir(folder_path)
+
+for file in files:
+
+    source = os.path.join(folder_path, file)
+
+    if os.path.isdir(source):
+        continue
+
+    extension = os.path.splitext(file)[1].lower()
+
+    if extension in file_types:
+
+        destination_folder = os.path.join(folder_path, file_types[extension])
+
+        os.makedirs(destination_folder, exist_ok=True)
+
+        destination = os.path.join(destination_folder, file)
+
+        shutil.move(source, destination)
+
+        print(file, "Moved Successfully!")
